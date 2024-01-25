@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta charset="UTF-8">
+<title>メモ</title>
+</head>
+<link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+<body th:class="${isOwner}==true ? 'myBookShelf' : 'otherBookShelf'">
+	<h1 th:if="${isOwner}==true">～あなたの本のメモ～</h1>
+	<h1 th:if="${isOwner}==false">～[[${owner.name}]]さんの本のメモ～</h1>
+	
+	<div class="menuSet">
+		<a th:href="(@{/showBook})+'/'+${bookView.bookId}" class="menu">📖この本の情報へもどる</a>
+	</div>
+	
+	<div class="menuSet" style="clear:both;">
+		<a class="menu" th:if="${isOwner}==true" th:href="@{/createMemoComment}+'/'+${bookView.bookId}">➕追加</a>
+		<a class="menu" th:each="memoComment:${bookView.additionalInfo.memoCommentList}" th:object="${memoComment}" th:href="(@{/activeMemoComment})+'/'+${bookView.bookId}+'?memoCommentId='+*{memoCommentId}">
+			<span th:style="(*{memoCommentId}==${activeMemoCommentId} ? 'font-weight:bold' : 'font-weight:normal')">[[*{title}]]</span>
+		</a>
+		</div>
+	<form class="memoComment" method="post"th:object="${memoComment}" th:if="(${isOwner}==true) or (${isOwner}==false and ${bookView.additionalInfo.memoCommentList.size} > 0)">
+		<input type="hidden" th:field="*{memoCommentId}">
+		<input type="hidden" th:field="*{bookId}">
+ 		<input type="text" th:field="*{title}" placeholder="タイトルを入力してください" th:readonly="${isOwner}==false" th:style="(${isOwner}==true ? 'border:normal;' : 'border:none;')">
+<!--/*		<textarea type="text" th:field="*{text}"></textarea> */-->
+		<hr>
+		<textarea type="text" name="text"  placeholder="メモを入力してください" th:readonly="${isOwner}==false" th:style="${isOwner}==true ? 'border:normal;' : 'border:none;'">[[*{text}]]</textarea>
+<!--/*		<span th:text="*{recordDate}" style="color:gray;font-size: xx-small;display: block;text-align: right;"></span><br> */-->
+		<div th:if="${isOwner}==true" style="width:100%;display: flex;justify-content: space-around;">
+			<input class="btn" type="submit" value="投稿・更新" th:formaction="@{/updateMemoComment}">
+<!--/*			<input class="btn" type="submit" value="➕新規メモ追加" th:formaction="@{/createMemoComment}"> */-->
+			<input class="btn btnAlert" type="submit" value="❌メモ削除" th:formaction="@{/deleteMemoComment}">
+		</div>
+		<ul th:if="${#fields.hasErrors('*')}" style="color:red">
+			<li th:each="err:${#fields.errors('*')}" th:text="${err}"></li>
+		</ul>
+	</form>
+	<h1 th:if="${isOwner}==false and ( ${bookView.additionalInfo.memoCommentList.size} == 0)")>この本のメモは登録されていません</h1>
+<!--/*	[[${isOwner}]]<br>
+[[${bookView}]]<br>
+	[[${memoComment}]]<br> */-->
+</body>
+</html>

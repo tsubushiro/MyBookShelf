@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta charset="UTF-8">
+<title>ユーザ情報</title>
+</head>
+<link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+<body style="background-color: rgb(0, 128, 255);">
+	<h1>ユーザ情報</h1>
+	<div class="menuSet">
+		<a class="menu" th:href="@{/editUser}">⚙️ユーザ情報編集画面へ</a>
+	</div>
+	<div class="info" th:object="${account}">
+		名前：<span th:text="*{name}"></span><br>
+		パスワード：<span th:text="*{pass}"></span><br>
+		年齢：<span th:text="*{age}"></span><br>
+		メールアドレス：<span th:text="*{mail}"></span><br>
+	</div>
+	<div class="menuSet">
+		<a class="menu" th:href="@{/top}">📘あなたの本棚へ戻る</a>
+		<a class="menu" th:href="@{/logout}">👋ログアウトページへ</a>
+	</div>
+	<div class="menuSet">
+		<a class="menu" th:href="@{/remove}">😭退会する</a>
+	</div>
+</body>
+</html>

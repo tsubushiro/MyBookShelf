@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta charset="UTF-8">
+<title>みんなの本棚</title>
+</head>
+<link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+<body class="otherBookShelf">
+	<h1>～みんなの本棚～</h1>
+	<div class="menuSet">
+		<a th:href="@{/top}" class="menu">📘あなたの本棚へ<br></a>
+	</div>
+	<div th:each="bookShelfView:${bookShelfViewList}" class="bookShelfList" th:object="${bookShelfView}">
+		<div class="bookShelfUserName">[[*{account.name}]]さんの本棚( [[*{size}]] )</div>
+		<a th:href="(@{/bookShelf})+'/'+*{account.userId}">
+		<div class="bookView" th:each="bookView:*{bookViewList}" th:object="${bookView}"
+					 th:with="readProgress=${readProgressList.get('__*{bookId}__')}">
+			<img class="thumbnail" th:src="*{thumbnail}"></img>
+			<div class="progress">
+			 	<span th:if="*{additionalInfo.readPlanList.size} ge 1 ">[[*{additionalInfo.readPlanList.size}]]周目</span>
+				<span th:if="${readProgress} ge 0">📈[[${readProgress}]]％</span>
+			</div>
+		</div>
+		</a>
+	</div>
+<!--/*	<span th:text="${bookShelfViewList}"></span> */-->
+<!--/* [[${readProgressList}]] */-->
+</body>
+</html>

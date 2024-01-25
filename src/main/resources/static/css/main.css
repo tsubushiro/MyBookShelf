@@ -1,0 +1,133 @@
+body{
+    width: 100%;
+    max-width:640px;
+    margin:auto;
+}
+.myBookShelf{
+	background-color:#007fff;
+}
+.otherBookShelf{
+	background-color:#14AE73;
+}
+.bookView{
+	width:128px;
+	height:182px;
+/*	display: inline-block;*/
+	position: relative;
+	float:left;
+}
+.clickArea{
+	width:100%;
+	height:100%;
+	position: absolute;
+	top:0px;
+	left:0px;
+	background-color:rgba(0,0,0,0);
+}
+.progress{
+	text-shadow: 2px 2px 4px #000;
+	width:100%;
+	position:absolute;
+	top:0px;
+	left:0px;
+	color:white;
+	background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0));
+}
+li:nth-child(odd)[class=bookDetail]{
+	background-color: rgb(255, 255, 128);
+}
+a[class=menu]{
+	border-radius:10px;
+	background-color: white;
+	padding:10px;
+	color:black;
+	display:inline-block;
+	text-decoration-line:none;
+	border:rgb(0, 0, 0,0.2) ;
+	border-width: 2px;
+	border-style: solid;
+}
+a{
+	text-decoration-line:none; 
+}
+.menuSet{
+	margin-bottom: 10px;
+}
+.thumbnail{
+	width:100%;
+}
+form{
+	border-radius:10px;
+	background-color: white;
+	padding:10px;
+	color:black;
+	margin-bottom: 10px;
+	width: 100%;
+}
+.bookInfo,.plotData,.readRecord,.info{
+	border-radius:10px;
+	background-color: white;
+	padding:10px;
+	color:black;
+	margin-bottom: 10px;
+}
+.bookInfo{
+	border-radius:10px;
+	background-color: white;
+	padding:10px;
+	color:black;
+	margin-bottom: 10px;
+	display: table;
+	width:100%
+}
+.bookShelfList{
+	border-radius:10px;
+	background-color: white;
+	padding:10px;
+	color:black;
+	margin-bottom: 10px;
+	clear:both;
+	display:table;
+	width:100%;
+}
+.bookShelfUserName{
+	border-radius:6px;
+	background-color: rgb(255, 255, 255);
+	margin-bottom: 10px ;
+	display:block;
+}
+h1{
+	color:white;
+	text-align: center;
+}
+hr { 
+    border: 0 none; 
+    height: 2px; 
+    color: rgb(0, 128, 255);
+    background-color: rgb(0, 128, 255);
+} 
+input,select,textarea{
+	font-size:100%;
+	margin-top:4px;
+}
+form.memoComment textarea{
+	width:100%;
+	height:200px;
+	font-size:16px;
+}
+.btn{
+/*    border: none;*/
+	border:rgb(0, 0, 0,0.2) ;
+	border-width: 2px;
+	border-style: solid;
+    border-radius: 5px;
+    padding: 10px 20px; 
+    background-color: rgb(255, 165, 64); 
+    color: #000;
+    cursor: pointer; 
+    min-width: 150px;
+}
+.btnAlert{
+	color:white;
+	background-color: rgb(230, 0, 0);
+}

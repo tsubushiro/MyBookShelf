@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta charset="UTF-8">
+<title>ユーザ情報新規登録</title>
+</head>
+<link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+<body style="background-color: rgb(0, 128, 255);">
+	<h1>ユーザ情報新規登録画面</h1>
+	<form th:action="@{/registOK}" method="post" th:object="${account}">
+		名前:<input type="text" th:field="*{name}"><br>
+<!--/*		<p th:if="${#fields.hasErrors('name')}" th:text="${#fields.errors('name')}"></p>*/-->
+		パスワード:<input type="password" th:field="*{pass}"><br>
+<!--/*		<p th:if="${#fields.hasErrors('pass')}" th:text="${#fields.errors('pass')}"></p>*/-->
+		年齢:<input type="number" min="0"  th:field="*{age}"><br>
+<!--/*		<p th:if="${#fields.hasErrors('age')}" th:text="${#fields.errors('age')}"></p>*/-->
+		メールアドレス:<input type="text"  th:field="*{mail}"><br>
+		<input class="btn" type="submit" value="新規登録">
+		<ul th:if="${#fields.hasErrors('*')}" style="color:red">
+			<li th:each="err:${#fields.errors('*')}" th:text="${err}"></li>
+		</ul>
+	</form>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta charset="UTF-8">
+<title>読書プラン登録</title>
+</head>
+<link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+<body style="background-color: rgb(0, 128, 255);">
+	<h1>～[[${account.name}]]さん、<br>読書プランを登録してください～</h1>
+	<form th:action="@{/registReadPlanOK}" method="post" th:object="${readPlan}">
+		<input type="hidden" th:field="*{bookId}">
+		開始予定日：<input type="date" th:field="*{startPlanDate}"><br>
+		終了予定日：<input type="date" th:field="*{endPlanDate}"><br>
+		<input class="btn" type="submit" value="この読書プランを登録" th:formaction="@{/registReadPlanOK}"><br>
+		<ul th:if="${#fields.hasErrors('*')}" style="color:red">
+			<li th:each="err:${#fields.errors('*')}" th:text="${err}"></li>
+		</ul>
+	</form>
+	<div class="bookInfo" th:object="${bookView}">
+<!--		<hr>-->
+<!--		タイトル：<span th:text="*{title}"></span><br>-->
+<!--		著者：<span th:text="*{authors}"></span><br>-->
+<!--		出版社：<span th:text="*{publisher}"></span><br>-->
+<!--		ページ数：<span th:text="*{pageCount}"></span><br>-->
+<!--		<img th:src="*{thumbnail}"></img><br>-->
+<!--		<hr>-->
+		<div style="float: left;"><img th:src="*{thumbnail}" ></img></div>
+		<div>
+			<ul style="list-style: none;">
+				<li class="bookDetail">タイトル：[[*{title}]]</li>
+				<li class="bookDetail">著者：[[*{authors}]]</li>
+				<li class="bookDetail">出版社：[[*{publisher}]]</li>
+				<li class="bookDetail">ページ数：[[*{pageCount}]]</li>
+				<li class="bookDetail">ISBNコード：[[*{commonBookId}]]</li>
+			</ul>
+		</div>
+	</div>
+	<div class="menuSet" style="clear:both;">
+		<a class="menu" th:href="(@{/showBook})+'/'+${bookView.bookId}">📖本情報へもどる</a>
+		<a class="menu" th:href="@{/top}">📘あなたの本棚へ戻る</a>
+	</div>
+</body>
+</html>

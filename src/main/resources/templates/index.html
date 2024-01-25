@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta charset="UTF-8">
+<title>ログイン</title>
+</head>
+<link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+<body style="background-color: rgb(0, 128, 255);">
+	<h1>～ようこそ、YONDANA!へ～</h1>
+	<form th:action="@{/login}" method="post">
+		名前:<input type="text" name="name"><br>
+		パスワード:<input type="password" name="pass"><br>
+		<input class="btn"type="submit" value="ログイン" style="margin-top: 10px;">
+	</form>
+	<a class="menu" th:href="@{/register}">新規登録</a>
+</body>
+</html>

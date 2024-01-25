@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta charset="UTF-8">
+<title>ログアウト画面</title>
+</head>
+<link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+<body style="background-color: rgb(0, 128, 255);">
+	<h1>さよなら[[${account.name}]]さん</h1>
+	<div class="menuSet">
+	<a class="menu" th:href="@{/show}">👋ログアウトします</a>
+	<a class="menu" th:href="@{/userInfo}">⚙️ユーザ情報画面へ</a>
+	<a class="menu" th:href="@{/top}">📘あなたの本棚へ戻る</a>
+	</div>
+</body>
+</html>

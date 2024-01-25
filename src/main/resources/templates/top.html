@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta charset="UTF-8">
+<title>本棚</title>
+</head>
+<link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+<body th:class="${isOwner}==true ? 'myBookShelf' : 'otherBookShelf'">
+	<h1 th:if="${isOwner}==true">～あなたの本棚～</h1>
+	<h1 th:if="${isOwner}==false">～[[${owner.name}]]さんの本棚～</h1>
+	<div class="menuSet" style="clear:both;">
+		<a th:if="${isOwner}==true" class="menu" th:href="@{/registNewBook}">📖本を登録</a>
+		<a th:if="${isOwner}==false" class="menu" th:href="@{/top}">📘あなたの本棚へ</a>
+		<a class="menu" th:href="@{/everyoneBook}">📚みんなの本棚へ</a>
+		<a th:if="${isOwner}==true" class="menu" th:href="@{/userInfo}">⚙️ユーザ情報画面</a>
+		<h2 th:if="${bookViewList.size}==0 ">
+			<a th:if="${isOwner}==true" th:href="@{/registNewBook}" class="menu">
+				<span style="color: crimson;">📖あなたの最初の一冊を登録してください📖</span>
+			</a>
+			<span th:if="${isOwner}==false">この本棚に登録されている本はありません…</span>
+		</h2>
+	</div>
+	<h1 th:if="${isOwner}==true" th:text="${registBookMessage}"></h1>
+	<div class="bookView" th:each="bookView: ${bookViewList}">
+		<div th:object="${bookView}" 
+		 th:with="readProgress=${readProgressList.get('__*{bookId}__')}">
+<!--/*			タイトル：<span th:text="*{title}"></span><br>
+			著者：<span th:text="*{authors}"></span><br>
+			出版社：<span th:text="*{publisher}"></span><br>
+			ページ数：<span th:text="*{pageCount}"></span><br>
+			<img th:src="*{thumbnail}"></img> */-->
+			<a th:href="(@{/showBook})+'/'+*{bookId}">
+				<img class="thumbnail" th:src="*{thumbnail}">
+				<div class="progress">
+				 	<span th:if="*{additionalInfo.readPlanList.size} ge 1 ">[[*{additionalInfo.readPlanList.size}]]周目</span>
+					<span th:if="${readProgress} ge 0">📈[[${readProgress}]]％</span>
+				</div>
+				<div class="clickArea"></div>
+			</a>
+		</div>
+	</div>
+</body>
+</html>

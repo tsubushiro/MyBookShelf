@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta charset="UTF-8">
+<title>ユーザ情報編集</title>
+</head>
+<link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+<body style="background-color: rgb(0, 128, 255);">
+	<h1>ユーザ情報編集</h1>
+	<form th:action="@{/editOK}" method="post" th:object="${account}">
+		<input type="hidden" th:field="*{userId}">
+		名前:<input type="text" th:field="*{name}"><br>
+<!--/*		<p th:if="${#fields.hasErrors('name')}" th:text="${#fields.errors('name')}"></p>*/-->
+		パスワード:<input type="text" th:field="*{pass}"><br>
+<!--/*		<p th:if="${#fields.hasErrors('pass')}" th:text="${#fields.errors('pass')}"></p>*/-->
+		年齢:<input type="number"  th:field="*{age}" ><br>
+<!--/*		<p th:if="${#fields.hasErrors('age')}" th:text="${#fields.errors('age')}"></p>*/-->
+		メールアドレス:<input type="text"  th:field="*{mail}" ><br>
+		<input class="btn"type="submit" value="上記に変更する">
+		<ul th:if="${#fields.hasErrors('*')}" style="color:red">
+			<li th:each="err:${#fields.errors('*')}" th:text="${err}"></li>
+		</ul>
+	</form>
+	<a class="menu" th:href="@{/userInfo}">⚙️ユーザ情報画面へもどる</a> 
+</body>
+</html>

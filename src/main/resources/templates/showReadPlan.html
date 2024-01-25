@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta charset="UTF-8">
+<title>読書プラン情報</title>
+</head>
+<link th:href="@{/css/main.css}" rel="stylesheet" type="text/css">
+<body onload="main()" th:class="${isOwner}==true ? 'myBookShelf' : 'otherBookShelf'">
+<!--/*<body onload="main()" style="background-color: rgb(0, 128, 255);">*/-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+    <!--/* 埋め込み方 https://miruraku.com/java/thymeleaf/javascript/inline/ */-->
+    <script type="text/javascript" th:inline="javascript">
+		// グラフ描画
+		function main(){
+			[planData,readRecordData]=JSON.parse(/*[[${recordPlanPlotData}]]*/);
+			// console.log(planData);
+			// console.log(readRecordData);		
+			var ctx = document.getElementById('myChart').getContext('2d');
+			ctx.canvas.height = "100%";
+			var chart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					datasets: [
+						{
+							label: '実績',
+							type:'bar',
+							backgroundColor: 'rgb(54,164,235,0.8)',
+							borderColor: 'rgb(54,164,235,0.5)',
+							fill: false,
+							data:readRecordData
+						},
+						{
+							label: '予定',
+							type: 'line',
+							borderColor : "rgba(254,97,132,0.8)",
+							backgroundColor : "rgba(254,97,132,0.5)",
+							fill: true,
+							data:planData
+						}
+					]
+				},
+				options: {
+					scales: {
+						xAxes: [{
+							type: 'time',
+							time: {
+								unit: 'day'
+							}
+						}]
+					},
+					elements: {
+						point:{
+							radius: 0
+						}	
+					}
+				}
+			});
+		}
+	</script>
+	<h1 th:if="${isOwner}==true">～あなたの読書プラン～</h1>
+	<h1 th:if="${isOwner}==false">～[[${owner.name}]]さんの読書プラン～</h1>
+	<div class="menuSet">
+		<a th:href="(@{/showBook})+'/'+${readPlanView.bookId}" class="menu">📖この本の情報へもどる</a>
+<!--/*		<a th:href="@{/top}" class="menu">📘あなたの本棚へ戻る</a> */-->
+	</div>
+	<form method="post" th:object="${readRecord}" th:if="${isOwner}==true">
+		実績登録：<input type="hidden" th:field="*{readRecordId}" th:if="${isOwner}==true">
+		<input type="hidden" th:field="*{readPlanId}">
+		<input type="date" th:field="*{recordDate}">：
+		<input type="number" th:field="*{readPage}" min=1 th:max="${readPlanView.commonBook.pageCount}">ページ
+		<input class="btn" type="submit" value="登録" th:formaction="@{/registNewReadRecord}"><br>
+ 		<ul th:if="${#fields.hasErrors('*')}" style="color:red">
+			<li th:each="err:${#fields.errors('*')}" th:text="${err}"></li>
+		</ul>
+	</form>
+	<div class="plotData" style="position:relative;width:350px;height:350px;">
+		<canvas id="myChart"></canvas>
+	</div>
+	<div class="readRecord">
+		<span th:object="${readPlanView}">
+		読書履歴：<br>
+		<span th:each="readRecord:*{readRecordList}">
+			<span th:text="${readRecord.recordDate}"></span>：
+			<span th:text="${readRecord.readPage}+'ページ'"></span>
+			<a th:if="${isOwner}==true"
+			 th:href="@{/deleteReadRecord}+'/'+${readRecord.readPlanId}+'?readRecordId='+${readRecord.readRecordId}">❌</a>
+			<br>
+		</span>
+		<span th:if="${readProgress}>=0">ページ進捗：[[${readProgress}]]％</span>
+		<hr>
+		開始日：<span th:text="*{startPlanDate}"></span><br>
+		終了日（予定）：<span th:text="*{endPlanDate}"></span>
+<!--/*		タイトル：<span th:text="*{commonBook.title}"></span><br>
+		著者：<span th:text="*{commonBook.authors}"></span><br>
+		出版社：<span th:text="*{commonBook.publisher}"></span><br>
+		ページ数：<span th:text="*{commonBook.pageCount}"></span><br>
+		<img th:src="*{commonBook.thumbnail}"></img>
+		<hr>　*/-->
+		</span>
+	</div>
+<!--/*	<span th:text="${readPlanView}"></span><br>
+	<span th:text="${readRecord}"></span><br> */-->
+</body>
+</html>

@@ -31,7 +31,7 @@
 			ページ数：<span th:text="*{pageCount}"></span><br>
 			<img th:src="*{thumbnail}"></img> */-->
 			<a th:href="(@{/showBook})+'/'+*{bookId}">
-				<img class="thumbnail" th:src="*{thumbnail}">
+				<img class="thumbnail" th:src="*{thumbnail}!='' ? *{thumbnail} : (@{/img/noImage.png} )">
 				<div class="progress">
 				 	<span th:if="*{additionalInfo.readPlanList.size} ge 1 ">[[*{additionalInfo.readPlanList.size}]]周目</span>
 					<span th:if="${readProgress} ge 0">📈[[${readProgress}]]％</span>

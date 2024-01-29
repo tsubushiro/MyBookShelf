@@ -78,7 +78,8 @@ public class CommonBookRepository {
 				String authors = volumeInfo.path("authors").path(0).asText("");
 				String publisher = volumeInfo.path("publisher").asText("");
 				int pageCount = Integer.parseInt(volumeInfo.path("pageCount").asText("0"));//ページ数が取得できない場合もある
-				if( pageCount ==0 ) continue; // ページ数が0のときは登録しない
+//				if( pageCount ==0 ) continue; // ページ数が0のときは登録しない
+				// クレームがきたので
 //				System.out.println(i+":"+title+","+pageCount+"page");
 				String thummail = volumeInfo.path("imageLinks").path("thumbnail").asText("");
 				CommonBook commonBook = new CommonBook(CommonBookId, title, authors, publisher, pageCount, thummail);

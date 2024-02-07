@@ -1,16 +1,16 @@
 package com.example.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import com.example.demo.test.Test;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-public class MyBookShelfApplication {
+public class MyBookShelfApplication  extends SpringBootServletInitializer implements WebMvcConfigurer {
 	
-	@Autowired
-	Test test;
+//	@Autowired
+//	Test test;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(MyBookShelfApplication.class, args)
@@ -18,8 +18,13 @@ public class MyBookShelfApplication {
 //		.execute()
 		;
 	}
+	
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(MyBookShelfApplication.class);
+    }
 
-	private void execute() {
-		test.execute();
-	}
+//	private void execute() {
+//		test.execute();
+//	}
 }

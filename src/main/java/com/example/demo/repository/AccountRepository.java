@@ -21,9 +21,9 @@ public class AccountRepository {
 	
 	// ユーザ取得
 	public Account findAccount(LoginUser loginUser) {
-		String sql="SELECT USERID,NAME,PASS,AGE,MAIL FROM ACCOUNT WHERE NAME = ? AND PASS = ? AND STATUS = 0";
-		System.out.println(loginUser);
-		List<Map<String,Object>> resultList = jdbcTemplate.queryForList(sql,loginUser.getName(),loginUser.getPass());
+		String sql="SELECT USERID,NAME,PASS,AGE,MAIL FROM ACCOUNT WHERE NAME = ? AND STATUS = 0";
+		// System.out.println(loginUser);
+		List<Map<String,Object>> resultList = jdbcTemplate.queryForList(sql,loginUser.getName());
 		if(resultList.size()!=0 && resultList != null) {
 			for(Map<String,Object> result :resultList) {
 				int userId = (int) result.get("userid");
@@ -32,7 +32,7 @@ public class AccountRepository {
 				int age = (int) result.get("age");
 				String mail = (String) result.get("mail");
 				Account registerUser = new Account(userId,name,pass,age,mail);
-				System.out.println(registerUser);
+				// System.out.println(registerUser);
 				return registerUser;
 			}
 		}
@@ -85,8 +85,8 @@ public class AccountRepository {
 	}
 	// ユーザ削除
 	public boolean remove(Account registerUser) {
-		String sql="UPDATE ACCOUNT SET STATUS=-1 WHERE USERID=? AND PASS=?";
-		int result = jdbcTemplate.update(sql,registerUser.getUserId(),registerUser.getPass());
+		String sql="UPDATE ACCOUNT SET STATUS=-1 WHERE USERID=?";
+		int result = jdbcTemplate.update(sql,registerUser.getUserId());
 		
 		if( result == 0 ) {
 			return false;//削除失敗
@@ -97,11 +97,11 @@ public class AccountRepository {
 	// ユーザ更新
 	public Account update(Account registerUser) {
 		String sql="UPDATE ACCOUNT SET NAME = ? ,PASS = ? ,AGE = ? ,MAIL=? WHERE USERID=?";
-		System.out.println(registerUser.getName()+"\n"+
-				registerUser.getPass()+"\n"+
-				registerUser.getAge()+"\n"+
-				registerUser.getMail()+"\n"+
-				registerUser.getUserId());
+//		System.out.println(registerUser.getName()+"\n"+
+//				registerUser.getPass()+"\n"+
+//				registerUser.getAge()+"\n"+
+//				registerUser.getMail()+"\n"+
+//				registerUser.getUserId());
 		int result = jdbcTemplate.update(
 				sql,
 				registerUser.getName(),

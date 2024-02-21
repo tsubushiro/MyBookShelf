@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,14 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public Account loginCheck(LoginUser loginUser) {
-		Account result = repository.findAccount(loginUser);
+		String inputPass = loginUser.getPass();//入力パスワード
+		Account result = null ;
+		Account account = repository.findAccount(loginUser);
+		// 入力されたパスワードとDBのパスワード(ハッシュ化済み)を比較
+		if(account!=null && BCrypt.checkpw(inputPass, account.getPass())) {
+			account.setPass(inputPass);//アカウントを返す時はパスワードも返却
+			result = account;
+		}
 		return result;
 	}
 
@@ -43,6 +51,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean createNewAccount(Account registerUser) {
+		registerUser = accountClone(registerUser);
+		registerUser.setPass(BCrypt.hashpw(registerUser.getPass(),BCrypt.gensalt()));
 		boolean result = repository.insert(registerUser);
 		return result;
 	}
@@ -58,26 +68,49 @@ public class UserServiceImpl implements UserService {
 	// アカウントの削除
 	@Override
 	public boolean removeAccount(Account registerUser) {
+		registerUser = accountClone(registerUser);
 		int UserId = registerUser.getUserId();
 		if(repository.findAccount(registerUser) == false){ //見つからなかったら抜ける
 			// System.out.println("なかったよ");
 			return false;
 		}
+		// アカウントの妥当性の確認
+		LoginUser loginUser = new LoginUser( registerUser.getName(),registerUser.getPass());
+		String inputPass = registerUser.getPass();//入力パスワード
+		Account account = repository.findAccount(loginUser);//ハッシュ化パスワード取得のため
+		// accountがnull、registerUserとaccountが同じIDでない場合は抜ける
+		if(account!=null && account.getUserId() != registerUser.getUserId()) return false;
+		// 入力されたパスワードとDBのパスワード(ハッシュ化済み)を比較
+		if(!(account !=null && BCrypt.checkpw(inputPass, account.getPass()))) {
+			return false;// パスワードが一致しない場合は抜ける
+		}
+		// System.out.println(registerUser);
 		boolean result = repository.remove(registerUser);
-		// System.err.println("result:"+result);
-		
-		// 各データ削除
-		readRecordRepository.removeByUserId(UserId);// 読書記録
-		readPlanRepository.removeByUserId(UserId);// 読書プラン
-		bookShelfRepository.removeByUserId(UserId);// 本棚
-		memoCommentRepository.removeByUserId(UserId);// メモ
-		
-		return result;
+		if(result == false) {
+			return false;
+		}else {
+			// 各データ削除
+			readRecordRepository.removeByUserId(UserId);// 読書記録
+			readPlanRepository.removeByUserId(UserId);// 読書プラン
+			bookShelfRepository.removeByUserId(UserId);// 本棚
+			memoCommentRepository.removeByUserId(UserId);// メモ
+			
+			return true;
+		}
 	}
 
 	@Override
 	public Account updateAccount(Account registerUser) {
-		Account result = repository.update(registerUser);
+		registerUser = accountClone(registerUser);
+		String inputPass = registerUser.getPass();//元のパスワード
+		// パスワードハッシュ化
+		Account result = null;
+		registerUser.setPass(BCrypt.hashpw(registerUser.getPass(),BCrypt.gensalt()));
+		Account account = repository.update(registerUser);
+		if(account!=null) {
+			account.setPass(inputPass); //元のパスワード
+			result = account;
+		}
 		return result;
 	}
 
@@ -96,4 +129,15 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 	
+	// アカウントのクローン(引数で取得したオブジェクトに上書きしないため)
+	private Account accountClone(Account account) {
+		return new Account(
+				account.getUserId(),
+				account.getName(),
+				account.getPass(),
+				account.getAge(),
+				account.getMail()
+				)
+		;
+	}
 }

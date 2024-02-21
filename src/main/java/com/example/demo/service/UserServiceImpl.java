@@ -79,9 +79,10 @@ public class UserServiceImpl implements UserService {
 		String inputPass = registerUser.getPass();//入力パスワード
 		Account account = repository.findAccount(loginUser);//ハッシュ化パスワード取得のため
 		// accountがnull、registerUserとaccountが同じIDでない場合は抜ける
-		if(account!=null && account.getUserId() != registerUser.getUserId()) return false;
+		if(account == null) return false;
+		if(account.getUserId() != registerUser.getUserId()) return false;
 		// 入力されたパスワードとDBのパスワード(ハッシュ化済み)を比較
-		if(!(account !=null && BCrypt.checkpw(inputPass, account.getPass()))) {
+		if(BCrypt.checkpw(inputPass, account.getPass())==false) {
 			return false;// パスワードが一致しない場合は抜ける
 		}
 		// System.out.println(registerUser);

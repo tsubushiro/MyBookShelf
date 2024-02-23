@@ -194,7 +194,8 @@ erDiagram
 
 ### 画面設計
 
-1) index.htm  
+1) index.htm ： ログインページ 
+
 ![index](https://github.com/tsubushiro/MyBookShelf/assets/156736016/b8a57471-1181-40a9-93a2-b17fdeb1a730)
 
 【部品の説明】	
@@ -217,7 +218,7 @@ erDiagram
   
   
 ***  
-2) top.htm  
+2) top.htm  ： **メインページ** ユーザの本棚  
 ![top](https://github.com/tsubushiro/MyBookShelf/assets/156736016/09cf6494-1beb-4579-aaf7-cf46b978f72c)
 
 【部品の説明】  
@@ -263,7 +264,7 @@ erDiagram
 　自分の本棚(main)へ遷移する。  
   
 ***  
-3) everyoneBookShelf.html  
+3) everyoneBookShelf.html  他のユーザの本棚の一覧  
 ![everyoneBookShelf](https://github.com/tsubushiro/MyBookShelf/assets/156736016/e4b890b2-418b-4ba7-aa41-9d791d6b8dde)  
 
 【部品の説明】
@@ -279,7 +280,7 @@ erDiagram
 　他のユーザの本棚の本が並ぶ。  
   
 2. Aさんの本棚をクリック  
-　Aさんの本棚(main)へ遷移する。  
+　Aさんの本棚(top)へ遷移する。  
   
 3. 「画像のサムネイル」をクリック  
 　(本棚に登録されている)本の情報(showBook)へ遷移する。  
@@ -288,7 +289,7 @@ erDiagram
 　自分の本棚(main.html)へ遷移する。  
   
 ***
-4) showBook.html  
+4) showBook.html  所有本の書籍情報、読書プランやメモへのリンク
   
 ![showBook](https://github.com/tsubushiro/MyBookShelf/assets/156736016/0a03e5b9-01d7-4ed2-8e20-3be8c1f81f2e)
 
@@ -319,7 +320,7 @@ erDiagram
 　本棚に戻る(main.html)  
   
 ***
-5) deleteUser.html  
+5) deleteUser.html  アカウント削除  
 
 ![deleteUser](https://github.com/tsubushiro/MyBookShelf/assets/156736016/1486c258-cca0-4901-a994-c0ada3aa5c1c)  
 
@@ -338,7 +339,7 @@ erDiagram
   
 
 ***
-6) registerUser.htm  
+6) registerUser.htm  アカウント登録  
 ![registerUser](https://github.com/tsubushiro/MyBookShelf/assets/156736016/88a800f6-d4da-4cb1-8584-d51dada212a7)　　
 
 | 部品番号 | 種類       | 説明                                 |
@@ -360,7 +361,7 @@ erDiagram
 ・パスワードが1文字以上。   
   
 ***
-7) editUser.htm  
+7) editUser.htm  アカウント編集  
 ![editUser](https://github.com/tsubushiro/MyBookShelf/assets/156736016/fd755ddf-bbd1-4517-a475-231964a9d50e)  
   
 【部品の説明】  
@@ -383,7 +384,7 @@ erDiagram
 ・パスワードが1文字以上。 
   
 ***
-8) comfirmUser.htm  
+8) comfirmUser.htm  登録時のアカウント情報の確認  
 ![comfirmUser](https://github.com/tsubushiro/MyBookShelf/assets/156736016/b309dc12-d8a5-43b5-9cab-48b656cea479)
   
 【部品の説明】  
@@ -401,7 +402,7 @@ erDiagram
 　ユーザが確認ボタンを押下すると、トップページ画面に遷移する。　　
 
 ***
-9) userInfo.htm  
+9) userInfo.htm  登録後のアカウント情報の確認  
 ![userInfo](https://github.com/tsubushiro/MyBookShelf/assets/156736016/36ff7fb5-bb84-4fa5-b6e4-4fd1957d6f8a)  
 
 【部品の説明】
@@ -422,7 +423,7 @@ erDiagram
 ユーザ登録削除画面へ遷移する。　　
 
 ***
-10) showReadPlan.htm  
+10) showReadPlan.htm  読書プランの表示  
 ![showReadPlan](https://github.com/tsubushiro/MyBookShelf/assets/156736016/7938c12e-55c3-48cb-9338-e82410e692c7)
 
 【部品の説明】
@@ -447,7 +448,7 @@ erDiagram
 　本棚に戻る。 
 
 ***
-11) registNewBook.htm  
+11) registNewBook.htm  本棚への登録画面  
 ![registNewBook](https://github.com/tsubushiro/MyBookShelf/assets/156736016/6b3c7365-5097-4418-8c8d-4a216c1bf3ff)
   
 【部品の説明】  
@@ -475,7 +476,7 @@ erDiagram
 　ボタンを押下すると、メイン画面(main.html)に遷移する。  
 
 ***
-12) registReadPlan.htm  
+12) registReadPlan.htm  読書プランの登録  
 ![registReadPlan](https://github.com/tsubushiro/MyBookShelf/assets/156736016/fcc3e98b-99fc-4ba9-b827-f5fb6f29e0eb)
 
 【部品の説明】
@@ -501,7 +502,7 @@ erDiagram
 　ボタンを押下すると、メイン画面(main.html)に遷移する。  
 
 ***
-13) showMemo.html  
+13) showMemo.html  メモの確認  
 ![showMemo](https://github.com/tsubushiro/MyBookShelf/assets/156736016/27d742cc-f9ed-49aa-8d09-c2af671bb4b5)
 
 
@@ -527,7 +528,7 @@ erDiagram
 　(本棚に登録されている)本の情報(showBook)へ遷移する。		
 
 
-画面遷移  
+### 画面遷移  
 ```mermaid
   graph LR
     index.htm --ID/パスワード認証--> top.htm 

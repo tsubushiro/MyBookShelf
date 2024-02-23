@@ -212,13 +212,10 @@ erDiagram
         showMemo.htm --本の情報--> showBook.htm
     end
 
-    subgraph funcB [アカウント登録機能]
+    subgraph funcB [アカウント管理機能]
         registerUser.htm --登録--> confirmUser.htm
         confirmUser.htm　--やり直す--> registerUser.htm
         confirmUser.htm --OK--> top.htm
-    end
-
-    subgraph funC [アカウント編集/削除機能]
         top.htm --ユーザ情報--> userInfo.htm
         userInfo.htm --あなたの本棚--> top.htm
         userInfo.htm --内容登録--> editUser.htm

@@ -216,7 +216,7 @@ erDiagram
 　ユーザが「新規登録」ボタンを押下すると、ユーザ登録画面に遷移する。  
   
   
-  
+***  
 2) top.htm  
 ![top](https://github.com/tsubushiro/MyBookShelf/assets/156736016/09cf6494-1beb-4579-aaf7-cf46b978f72c)
 
@@ -262,6 +262,7 @@ erDiagram
 8. 「じぶんの本棚」の押下  
 　自分の本棚(main)へ遷移する。  
   
+***  
 3) everyoneBookShelf.html  
 ![everyoneBookShelf](https://github.com/tsubushiro/MyBookShelf/assets/156736016/e4b890b2-418b-4ba7-aa41-9d791d6b8dde)  
 
@@ -285,10 +286,12 @@ erDiagram
   
 4. 「自分の本棚へ」の押下  
 　自分の本棚(main.html)へ遷移する。  
-
+  
+***
 4) showBook.html  
   
-![showBook](https://github.com/tsubushiro/MyBookShelf/assets/156736016/495d651f-72d8-40f4-afb5-661b71ca4998)
+![showBook](https://github.com/tsubushiro/MyBookShelf/assets/156736016/0a03e5b9-01d7-4ed2-8e20-3be8c1f81f2e)
+
 
 【部品の説明】
 | 部品番号 | 種類       | 説明                   |
@@ -314,7 +317,8 @@ erDiagram
   
 4. 「本棚に戻る」をクリック。  
 　本棚に戻る(main.html)  
-
+  
+***
 5) deleteUser.html  
 
 ![deleteUser](https://github.com/tsubushiro/MyBookShelf/assets/156736016/1486c258-cca0-4901-a994-c0ada3aa5c1c)  
@@ -331,9 +335,11 @@ erDiagram
 2. 「削除する」の押下  
 　押下すると、アカウント登録処理が起動して、トップ画面に遷移する。
 　問題があれば、同ページにリダイレクトする。  
+  
 
+***
 6) registerUser.htm  
-![registerUser](https://github.com/tsubushiro/MyBookShelf/assets/156736016/88a800f6-d4da-4cb1-8584-d51dada212a7)
+![registerUser](https://github.com/tsubushiro/MyBookShelf/assets/156736016/88a800f6-d4da-4cb1-8584-d51dada212a7)　　
 
 | 部品番号 | 種類       | 説明                                 |
 |------|----------|------------------------------------|
@@ -352,10 +358,11 @@ erDiagram
 ・重複するユーザ名が存在しない。  
 ・メールアドレスが正規。   
 ・パスワードが1文字以上。   
-
-7) editUser.htm  
   
-![editUser](https://github.com/tsubushiro/MyBookShelf/assets/156736016/fd755ddf-bbd1-4517-a475-231964a9d50e)
+***
+7) editUser.htm  
+![editUser](https://github.com/tsubushiro/MyBookShelf/assets/156736016/fd755ddf-bbd1-4517-a475-231964a9d50e)  
+  
 【部品の説明】  
 | 部品番号 | 種類       | 説明                           |
 |------|----------|------------------------------|
@@ -374,10 +381,11 @@ erDiagram
 ・重複するユーザ名が存在しない。  
 ・メールアドレスが正規。   
 ・パスワードが1文字以上。 
-
-8) comfirmUser.htm  
   
+***
+8) comfirmUser.htm  
 ![comfirmUser](https://github.com/tsubushiro/MyBookShelf/assets/156736016/b309dc12-d8a5-43b5-9cab-48b656cea479)
+  
 【部品の説明】  
 | 部品番号 | 種類  | 説明                |
 |------|-----|-------------------|
@@ -392,9 +400,10 @@ erDiagram
 2. 「確認ボタン」の押下　　
 　ユーザが確認ボタンを押下すると、トップページ画面に遷移する。　　
 
+***
 9) userInfo.htm  
-  
-![userInfo](https://github.com/tsubushiro/MyBookShelf/assets/156736016/36ff7fb5-bb84-4fa5-b6e4-4fd1957d6f8a)
+![userInfo](https://github.com/tsubushiro/MyBookShelf/assets/156736016/36ff7fb5-bb84-4fa5-b6e4-4fd1957d6f8a)  
+
 【部品の説明】
 | 部品番号 | 種類  | 説明                              |
 |------|-----|---------------------------------|
@@ -412,6 +421,7 @@ erDiagram
 3. 「ユーザ削除」リンクのクリック  
 ユーザ登録削除画面へ遷移する。　　
 
+***
 10) showReadPlan.htm  
 ![showReadPlan](https://github.com/tsubushiro/MyBookShelf/assets/156736016/7938c12e-55c3-48cb-9338-e82410e692c7)
 
@@ -435,7 +445,8 @@ erDiagram
 　日付とページの内容をチェックし、問題なければ、読書履歴登録処理が起動し、ページが更新される。  
 3. 「本棚に戻る」の押下  
 　本棚に戻る。 
-  
+
+***
 11) registNewBook.htm  
 ![registNewBook](https://github.com/tsubushiro/MyBookShelf/assets/156736016/6b3c7365-5097-4418-8c8d-4a216c1bf3ff)
   
@@ -463,8 +474,8 @@ erDiagram
 3. 「本棚に登録する」の押下  
 　ボタンを押下すると、メイン画面(main.html)に遷移する。  
 
+***
 12) registReadPlan.htm  
-  
 ![registReadPlan](https://github.com/tsubushiro/MyBookShelf/assets/156736016/fcc3e98b-99fc-4ba9-b827-f5fb6f29e0eb)
 
 【部品の説明】
@@ -489,7 +500,8 @@ erDiagram
 3. 「本棚に登録する」の押下  
 　ボタンを押下すると、メイン画面(main.html)に遷移する。  
 
-13) showMemo.html
+***
+13) showMemo.html  
 ![showMemo](https://github.com/tsubushiro/MyBookShelf/assets/156736016/27d742cc-f9ed-49aa-8d09-c2af671bb4b5)
 
 

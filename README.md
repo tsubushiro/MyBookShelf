@@ -263,7 +263,7 @@ erDiagram
 　自分の本棚(main)へ遷移する。  
   
 ***  
-3) everyoneBookShelf.html  他のユーザの本棚の一覧  
+3) everyoneBookShelf.htm  他のユーザの本棚の一覧  
 ![everyoneBookShelf](https://github.com/tsubushiro/MyBookShelf/assets/156736016/e4b890b2-418b-4ba7-aa41-9d791d6b8dde)  
 
 【部品の説明】
@@ -285,10 +285,10 @@ erDiagram
 　(本棚に登録されている)本の情報(showBook)へ遷移する。  
   
 4. 「自分の本棚へ」の押下  
-　自分の本棚(main.html)へ遷移する。  
+　自分の本棚(top.htm)へ遷移する。  
   
 ***
-4) showBook.html  所有本の書籍情報、読書プランやメモへのリンク
+4) showBook.htm  所有本の書籍情報、読書プランやメモへのリンク
   
 ![showBook](https://github.com/tsubushiro/MyBookShelf/assets/156736016/0a03e5b9-01d7-4ed2-8e20-3be8c1f81f2e)
 
@@ -316,10 +316,10 @@ erDiagram
 　メモ帳編集画面へ  
   
 4. 「本棚に戻る」をクリック。  
-　本棚に戻る(main.html)  
+　本棚に戻る(top.htm)  
   
 ***
-5) deleteUser.html  アカウント削除  
+5) deleteUser.htm  アカウント削除  
 
 ![deleteUser](https://github.com/tsubushiro/MyBookShelf/assets/156736016/1486c258-cca0-4901-a994-c0ada3aa5c1c)  
 
@@ -346,7 +346,7 @@ erDiagram
 | ①    | テキストボックス | ユーザ名を入力する。                         |
 | ②    | テキストボックス | メールアドレスを入力する。                      |
 | ③    | テキストボックス | パスワードを入力する。                        |
-| ④    | ボタン      | 登録確認ページ(registerUserConfirm)へ遷移する。 |
+| ④    | ボタン      | 登録確認ページ(registerUserhtm)へ遷移する。 |
 
 操作概要  
 1. 初期  
@@ -369,7 +369,7 @@ erDiagram
 | ①    | テキストボックス | ユーザ名を入力する。                   |
 | ②    | テキストボックス | メールアドレスを入力する。                |
 | ③    | テキストボックス | パスワードを入力する。                  |
-| ④    | ボタン      | ユーザ情報画面(userInfo.html)へ遷移する。 |
+| ④    | ボタン      | ユーザ情報画面(userInfo.htm)へ遷移する。 |
 
 【操作説明】  
 1. 初期  
@@ -383,7 +383,7 @@ erDiagram
 ・パスワードが1文字以上。 
   
 ***
-8) comfirmUser.htm  登録時のアカウント情報の確認  
+8) confirmUser.htm  登録時のアカウント情報の確認  
 ![comfirmUser](https://github.com/tsubushiro/MyBookShelf/assets/156736016/b309dc12-d8a5-43b5-9cab-48b656cea479)
   
 【部品の説明】  
@@ -395,9 +395,9 @@ erDiagram
 | ④    | ボタン | トップページ(top)へ遷移する。 |
 
 【操作説明】 
-1. 初期　　
+1. 初期  
 　ユーザ名、メールアドレス、パスワードの内容が表示されている。　　
-2. 「確認ボタン」の押下　　
+2. 「確認ボタン」の押下  
 　ユーザが確認ボタンを押下すると、トップページ画面に遷移する。　　
 
 ***
@@ -437,7 +437,7 @@ erDiagram
 | ⑦    | ボタン     | 読書履歴登録処理が軌道 |
 | ⑧    | キャンバス画像 | グラフ         |
 | ⑨    | リンク     | 本棚にもどる      |
-【】
+【操作説明】
 1. 初期  
 「日付」は現在の日付、「ページ」は既存ページが入力されている。  
 他人の読書プランを閲覧している場合、入力はできないようにする。  
@@ -472,7 +472,7 @@ erDiagram
 　ISBN問い合わせして登録があるか？  
   
 3. 「本棚に登録する」の押下  
-　ボタンを押下すると、メイン画面(main.html)に遷移する。  
+　ボタンを押下すると、メイン画面(top.htm)に遷移する。  
 
 ***
 12) registReadPlan.htm  読書プランの登録  
@@ -498,7 +498,7 @@ erDiagram
  読み始める日付が読み終わる日付より後になっていないか？
 
 ***
-13) showMemo.html  メモの確認  
+13) showMemo.htm  メモの確認  
 ![showMemo](https://github.com/tsubushiro/MyBookShelf/assets/156736016/27d742cc-f9ed-49aa-8d09-c2af671bb4b5)
 
 
@@ -531,10 +531,10 @@ erDiagram
     index.htm --ユーザ登録--> registerUser.htm
     deleteUser.htm --削除--> index.htm
     subgraph funcA [本管理機能]
-    top.htm --本を登録--> registNewBook.html 
+    top.htm --本を登録--> registNewBook.htm 
         top.htm --みんなの本棚 --> everyoneBookShelf.htm
         everyoneBookShelf.htm --あなたの本棚--> top.htm
-        registNewBook.html  --本棚へ登録する--> top.htm
+        registNewBook.htm  --本棚へ登録する--> top.htm
         top.htm --本の情報--> showBook.htm
         showBook.htm --あなたの本棚--> top.htm
         showBook.htm --読書プラン登録--> registReadPlan.htm
@@ -546,9 +546,9 @@ erDiagram
     end
 
     subgraph funcB [アカウント管理機能]
-        registerUser.htm --登録--> confirmUser.htm
-        confirmUser.htm　--やり直す--> registerUser.htm
-        confirmUser.htm --OK--> top.htm
+        registerUser.htm --登録--> htmUser.htm
+        htmUser.htm　--やり直す--> registerUser.htm
+        htmUser.htm --OK--> top.htm
         top.htm --ユーザ情報--> userInfo.htm
         userInfo.htm --あなたの本棚--> top.htm
         userInfo.htm --内容登録--> editUser.htm

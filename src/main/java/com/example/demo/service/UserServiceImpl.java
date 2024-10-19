@@ -37,7 +37,8 @@ public class UserServiceImpl implements UserService {
 		Account account = repository.findAccount(loginUser);
 		// 入力されたパスワードとDBのパスワード(ハッシュ化済み)を比較
 		if(account!=null && BCrypt.checkpw(inputPass, account.getPass())) {
-			account.setPass(inputPass);//アカウントを返す時はパスワードも返却
+//			account.setPass(inputPass);//アカウントを返す時はパスワードも返却
+			account.setPass("dummy");//セッションにパスワードを残すのはダメなのでnullを返す
 			result = account;
 		}
 		return result;
@@ -50,11 +51,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean createNewAccount(Account registerUser) {
+	public Account createNewAccount(Account registerUser) {
+		Account account = null;
 		registerUser = accountClone(registerUser);
 		registerUser.setPass(BCrypt.hashpw(registerUser.getPass(),BCrypt.gensalt()));
 		boolean result = repository.insert(registerUser);
-		return result;
+		if(result) { //登録済
+			registerUser.setPass("dummy");
+			return registerUser;
+		}else {
+			return null;
+		}
 	}
 //	@Override
 //	public boolean registerAccount(Account registerUser) {
@@ -68,23 +75,24 @@ public class UserServiceImpl implements UserService {
 	// アカウントの削除
 	@Override
 	public boolean removeAccount(Account registerUser) {
-		registerUser = accountClone(registerUser);
+//		registerUser = accountClone(registerUser);
 		int UserId = registerUser.getUserId();
+		// セッションにパスワードを残さないようにしたので妥当性チェックは行わない
 		if(repository.findAccount(registerUser) == false){ //見つからなかったら抜ける
 			// System.out.println("なかったよ");
 			return false;
 		}
-		// アカウントの妥当性の確認
-		LoginUser loginUser = new LoginUser( registerUser.getName(),registerUser.getPass());
-		String inputPass = registerUser.getPass();//入力パスワード
-		Account account = repository.findAccount(loginUser);//ハッシュ化パスワード取得のため
-		// accountがnull、registerUserとaccountが同じIDでない場合は抜ける
-		if(account == null) return false;
-		if(account.getUserId() != registerUser.getUserId()) return false;
-		// 入力されたパスワードとDBのパスワード(ハッシュ化済み)を比較
-		if(BCrypt.checkpw(inputPass, account.getPass())==false) {
-			return false;// パスワードが一致しない場合は抜ける
-		}
+//		// アカウントの妥当性の確認
+//		LoginUser loginUser = new LoginUser( registerUser.getName(),registerUser.getPass());
+//		String inputPass = registerUser.getPass();//入力パスワード
+//		Account account = repository.findAccount(loginUser);//ハッシュ化パスワード取得のため
+//		// accountがnull、registerUserとaccountが同じIDでない場合は抜ける
+//		if(account == null) return false;
+//		if(account.getUserId() != registerUser.getUserId()) return false;
+//		// 入力されたパスワードとDBのパスワード(ハッシュ化済み)を比較
+//		if(BCrypt.checkpw(inputPass, account.getPass())==false) {
+//			return false;// パスワードが一致しない場合は抜ける
+//		}
 		// System.out.println(registerUser);
 		boolean result = repository.remove(registerUser);
 		if(result == false) {
@@ -101,15 +109,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Account updateAccount(Account registerUser) {
+	public Account updateAccount(Account registerUser,boolean withPass) {
 		registerUser = accountClone(registerUser);
 		String inputPass = registerUser.getPass();//元のパスワード
 		// パスワードハッシュ化
 		Account result = null;
+		Account account = null;
 		registerUser.setPass(BCrypt.hashpw(registerUser.getPass(),BCrypt.gensalt()));
-		Account account = repository.update(registerUser);
+		account = repository.update(registerUser,withPass);
 		if(account!=null) {
-			account.setPass(inputPass); //元のパスワード
+//			account.setPass(inputPass); //元のパスワード
+			account.setPass("dummy");
 			result = account;
 		}
 		return result;

@@ -12,7 +12,7 @@
 		<input type="hidden" th:field="*{userId}">
 		名前:<input type="text" th:field="*{name}"><br>
 <!--/*		<p th:if="${#fields.hasErrors('name')}" th:text="${#fields.errors('name')}"></p>*/-->
-		パスワード:<input type="text" th:field="*{pass}"><br>
+		<input type="hidden" th:field="*{pass}">
 <!--/*		<p th:if="${#fields.hasErrors('pass')}" th:text="${#fields.errors('pass')}"></p>*/-->
 		年齢:<input type="number"  th:field="*{age}" ><br>
 <!--/*		<p th:if="${#fields.hasErrors('age')}" th:text="${#fields.errors('age')}"></p>*/-->

@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.BookShelf;
 import com.example.demo.entity.LoginUser;
+import com.example.demo.entity.PasswordEdit;
 import com.example.demo.entity.ReadPlanView;
 import com.example.demo.service.BookShelfService;
 import com.example.demo.service.CommonBookService;
 import com.example.demo.service.UserService;
+import com.example.demo.validator.PasswordValidator;
 import com.example.demo.validator.UnuseableNameValidator;
 
 import jakarta.servlet.http.HttpSession;
@@ -61,10 +63,14 @@ public class LoginController {
 	//
     @Autowired
     UnuseableNameValidator validator;
+    
+    @Autowired
+    PasswordValidator passwordValidator;
 
     @InitBinder
     public void validatorBinder(WebDataBinder binder) {
         binder.addValidators(validator);
+        binder.addValidators(passwordValidator);
     }
 	
 	@GetMapping("show")
@@ -98,13 +104,12 @@ public class LoginController {
 			return "registUser";//リダイレクトはうまくいかない！
 		}
 		// アカウントの登録
-		boolean result = userService.createNewAccount(account);
+		Account result = userService.createNewAccount(account);
 		// System.out.println(result);
 		// アカウントの情報をそのままいれる
-		if(result) {
-			account = userService.loginCheck(new LoginUser(account.getName(),account.getPass()));
-			session.setAttribute("account",account);
-			model.addAttribute("account",account);
+		if(result != null) {
+			session.setAttribute("account",result);
+			model.addAttribute("account",result);
 			return "redirect:/top";
 		}
 		return "registUser";
@@ -167,6 +172,41 @@ public class LoginController {
 		model.addAttribute("account",account);
 		return "editUser";
 	}
+	// パスワード変更を専用のページで実施
+	// セッションにパスワードを保存しなくなったので
+	// UserServiceやAccountRepositoryに変更が必要
+	// ① accountのpasswordにnullを代入して返す
+	// ② accountのpasswordがnullでも動くようにする
+	// …RemoveAccountとか
+	// 登録変更時はpasswordをセット
+	// 返すときはpasswordをnullにする
+	@GetMapping("editPassword")
+	public String editPasswordView(Model model) {
+		model.addAttribute("passwordEdit",new PasswordEdit());
+		return "editPassword";
+	}
+	@PostMapping("passwordOK")
+	public String passwordOKView(@Validated PasswordEdit passwordEdit,
+			BindingResult bindingResult,Errors errors,Model model) {
+		Account account = (Account) session.getAttribute("account");
+		model.addAttribute("passwordEdit",passwordEdit);
+		LoginUser loginUser = new LoginUser(account.getName(),passwordEdit.getOldPass());
+		System.out.println(loginUser.getPass());
+		// 入力パスワードが
+		if(userService.loginCheck(loginUser) == null ) {
+			errors.rejectValue("oldPass","","現在のパスワードが正しくありません。もう一度おためしください");
+			return "editPassword";
+		}
+		if(bindingResult.hasErrors()) {
+//			System.out.println("エラーあるよ");
+			return "editPassword";
+		}
+		// 変更処理
+		account.setPass(passwordEdit.getNewPass());//新しいパスワードに変更
+		userService.updateAccount(account,true);//パスワードを含めた変更
+		return "passwordOK";
+	}
+	
 	@PostMapping("editOK")
 	public String postEditOKView(@Validated Account account,
 			BindingResult bindingResult,Model model) {
@@ -178,7 +218,7 @@ public class LoginController {
 		// TO アカウントをとってきて、セッションにためる
 		// サービスつくる
 		System.out.println("ここまで！");
-		Account result = userService.updateAccount(account);
+		Account result = userService.updateAccount(account,false);//パスワードを除く変更
 		System.out.println("result:"+result);
 		// トップに遷移させる場合はaccountのデータを取得して
 		// sessionに入れる(アカウント情報が変更されているため）
@@ -190,7 +230,7 @@ public class LoginController {
 		return "editUser";
 	}
 	
-	@ExceptionHandler(Exception.class)
+//	@ExceptionHandler(Exception.class)
     public String error(Exception e) {
         // エラー用のページに遷移させる
         return "failure";

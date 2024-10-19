@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import org.junit.jupiter.api.Test;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -69,7 +70,7 @@ class MyBookShelfApplicationTests {
 		System.out.println("start");
 		System.out.println(userservice.getUserName(18));
 	}
-	@Test
+//	@Test
 	void updateAccount() {
 		System.out.println("start");
 		Account account = new Account(
@@ -81,11 +82,15 @@ class MyBookShelfApplicationTests {
 				);
 		System.out.println(userservice.updateAccount(account));
 	}
-//	@Test
-//	void encodeTest() {
+	@Test
+	void encodeTest() {
+		String s1 = BCrypt.hashpw("1234",BCrypt.gensalt());
+		System.out.println(s1+"\t"+s1.length());
+//      BCryptPasswordEncoderはSpring.Securityのライブラリ
 //		BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder();
 //	    System.out.println(bcryptPasswordEncoder.encode("1234"));
 //	    System.out.println(bcryptPasswordEncoder.encode("1234"));
 //	    System.out.println(bcryptPasswordEncoder.encode("1234"));
-//	}
+		
+	}
 }

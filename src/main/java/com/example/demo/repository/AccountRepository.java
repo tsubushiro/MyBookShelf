@@ -95,14 +95,18 @@ public class AccountRepository {
 		return true;//削除成功
 	}
 	// ユーザ更新
-	public Account update(Account registerUser) {
-		String sql="UPDATE ACCOUNT SET NAME = ? ,PASS = ? ,AGE = ? ,MAIL=? WHERE USERID=?";
-//		System.out.println(registerUser.getName()+"\n"+
+	public Account update(Account registerUser, boolean withPass) {
+		String sql = null ;
+		//		System.out.println(registerUser.getName()+"\n"+
 //				registerUser.getPass()+"\n"+
 //				registerUser.getAge()+"\n"+
 //				registerUser.getMail()+"\n"+
 //				registerUser.getUserId());
-		int result = jdbcTemplate.update(
+		
+		int result = 0 ;
+		if(withPass) {//パスワードを含む変更
+			sql = "UPDATE ACCOUNT SET NAME = ? ,PASS = ? ,AGE = ? ,MAIL=? WHERE USERID=?";
+			result = jdbcTemplate.update(
 				sql,
 				registerUser.getName(),
 				registerUser.getPass(),
@@ -110,7 +114,17 @@ public class AccountRepository {
 				registerUser.getMail(),
 				registerUser.getUserId()
 			);
-		
+		}else {//パスワードを除く変更
+			sql = "UPDATE ACCOUNT SET NAME = ? ,AGE = ? ,MAIL=? WHERE USERID=?";
+			result = jdbcTemplate.update(
+				sql,
+				registerUser.getName(),
+//				registerUser.getPass(),
+				registerUser.getAge(),
+				registerUser.getMail(),
+				registerUser.getUserId()
+			);
+		}
 		if( result == 0 ) {
 			return null;//削除失敗
 		}

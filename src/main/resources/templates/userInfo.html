@@ -10,10 +10,11 @@
 	<h1>ユーザ情報</h1>
 	<div class="menuSet">
 		<a class="menu" th:href="@{/editUser}">⚙️ユーザ情報編集画面へ</a>
+		<a class="menu" th:href="@{/editPassword}">⚙️パスワード変更画面へ</a>
 	</div>
 	<div class="info" th:object="${account}">
 		名前：<span th:text="*{name}"></span><br>
-		パスワード：<span th:text="*{pass}"></span><br>
+<!--/*		パスワード：<span th:text="*{pass}"></span><br>	*/-->
 		年齢：<span th:text="*{age}"></span><br>
 		メールアドレス：<span th:text="*{mail}"></span><br>
 	</div>

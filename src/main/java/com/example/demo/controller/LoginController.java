@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -175,11 +176,10 @@ public class LoginController {
 	// パスワード変更を専用のページで実施
 	// セッションにパスワードを保存しなくなったので
 	// UserServiceやAccountRepositoryに変更が必要
-	// ① accountのpasswordにnullを代入して返す
-	// ② accountのpasswordがnullでも動くようにする
-	// …RemoveAccountとか
+	// ① AccountRepository側でaccountのpasswordにnullを代入して返す
+	// ② UserService側でaccountのpasswordがnullでも動くようにする
 	// 登録変更時はpasswordをセット
-	// 返すときはpasswordをnullにする
+	// IDとパスワードを照合して返すときはpasswordをnullにする
 	@GetMapping("editPassword")
 	public String editPasswordView(Model model) {
 		model.addAttribute("passwordEdit",new PasswordEdit());
@@ -192,7 +192,7 @@ public class LoginController {
 		model.addAttribute("passwordEdit",passwordEdit);
 		LoginUser loginUser = new LoginUser(account.getName(),passwordEdit.getOldPass());
 		System.out.println(loginUser.getPass());
-		// 入力パスワードが
+		// 入力パスワードが現在のパスワードと同じかどうか？
 		if(userService.loginCheck(loginUser) == null ) {
 			errors.rejectValue("oldPass","","現在のパスワードが正しくありません。もう一度おためしください");
 			return "editPassword";
@@ -230,7 +230,7 @@ public class LoginController {
 		return "editUser";
 	}
 	
-//	@ExceptionHandler(Exception.class)
+	@ExceptionHandler(Exception.class)
     public String error(Exception e) {
         // エラー用のページに遷移させる
         return "failure";

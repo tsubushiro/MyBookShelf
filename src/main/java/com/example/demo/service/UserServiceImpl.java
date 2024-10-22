@@ -77,11 +77,11 @@ public class UserServiceImpl implements UserService {
 	public boolean removeAccount(Account registerUser) {
 //		registerUser = accountClone(registerUser);
 		int UserId = registerUser.getUserId();
-		// セッションにパスワードを残さないようにしたので妥当性チェックは行わない
 		if(repository.findAccount(registerUser) == false){ //見つからなかったら抜ける
 			// System.out.println("なかったよ");
 			return false;
 		}
+//		セッションにパスワードを残さないようにしたので妥当性チェックは行わない		
 //		// アカウントの妥当性の確認
 //		LoginUser loginUser = new LoginUser( registerUser.getName(),registerUser.getPass());
 //		String inputPass = registerUser.getPass();//入力パスワード

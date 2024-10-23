@@ -106,9 +106,9 @@ public class LoginController {
 		}
 		// アカウントの登録
 		Account result = userService.createNewAccount(account);
-		// System.out.println(result);
 		// アカウントの情報をそのままいれる
 		if(result != null) {
+//			System.out.println("result:"+result);
 			session.setAttribute("account",result);
 			model.addAttribute("account",result);
 			return "redirect:/top";

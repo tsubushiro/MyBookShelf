@@ -79,9 +79,16 @@ public class BookShelfRepository {
 	}
 	
 	// 本棚の全リストを取得
-	public List<BookShelf> findAll(String where){
-		String sql = "SELECT * FROM BOOKSHELF "+where;
-		List<Map<String,Object>> resultList = jdbcTemplate.queryForList(sql);
+	public List<BookShelf> findAll(int findUserId){
+		String sql;
+		List<Map<String,Object>> resultList;
+		if(findUserId > 0) {//ユーザId指定
+			sql = "SELECT * FROM BOOKSHELF where STATUS=0 AND USERID=?";
+			resultList = jdbcTemplate.queryForList(sql,findUserId);
+		}else {//全ユーザ
+			sql = "SELECT * FROM BOOKSHELF";
+			resultList = jdbcTemplate.queryForList(sql);
+		}
 		List<BookShelf> bookShelfList = new ArrayList<>();
 		for(Map<String, Object> result : resultList) {
 			int bookId = (int) result.get("bookId");
@@ -97,9 +104,9 @@ public class BookShelfRepository {
 	}
 	
 	// 本棚全リストを取得
-	public List<BookShelf> findAll(){
-		return findAll("");
-	}
+//	public List<BookShelf> findAll(){
+//		return findAll(0);
+//	}
 	
 	// 所有者のIDを取得
 	public int getOwnerById(int bookId) {

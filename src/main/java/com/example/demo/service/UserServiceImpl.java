@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 		// 入力されたパスワードとDBのパスワード(ハッシュ化済み)を比較
 		if(account!=null && BCrypt.checkpw(inputPass, account.getPass())) {
 //			account.setPass(inputPass);//アカウントを返す時はパスワードも返却
-			account.setPass("dummy");//セッションにパスワードを残すのはダメなのでnullを返す
+			account.setPass("dummy");//セッションにパスワードを残すのはダメなのでdummyを返す
 			result = account;
 		}
 		return result;
@@ -52,11 +52,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Account createNewAccount(Account registerUser) {
-		Account account = null;
+//		Account account = null;
 		registerUser = accountClone(registerUser);
+		String inputPass = registerUser.getPass();//入力パスワード
 		registerUser.setPass(BCrypt.hashpw(registerUser.getPass(),BCrypt.gensalt()));
 		boolean result = repository.insert(registerUser);
 		if(result) { //登録済
+			// 登録したものを取得
+			registerUser = loginCheck(new LoginUser(registerUser.getName(),inputPass));
 			registerUser.setPass("dummy");
 			return registerUser;
 		}else {
@@ -75,7 +78,7 @@ public class UserServiceImpl implements UserService {
 	// アカウントの削除
 	@Override
 	public boolean removeAccount(Account registerUser) {
-//		registerUser = accountClone(registerUser);
+		registerUser = accountClone(registerUser);
 		int UserId = registerUser.getUserId();
 		if(repository.findAccount(registerUser) == false){ //見つからなかったら抜ける
 			// System.out.println("なかったよ");

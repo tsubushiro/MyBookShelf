@@ -77,7 +77,7 @@ public class AccountRepository {
 				registerUser.getPass(),
 				registerUser.getAge(),
 				registerUser.getMail());
-		// System.out.println("result:"+result);
+	    // System.out.println("result:"+result);
 		if( result == 0) {
 			return false;//登録失敗
 		}

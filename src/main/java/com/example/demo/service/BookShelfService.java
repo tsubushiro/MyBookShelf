@@ -38,12 +38,12 @@ public class BookShelfService{
 	
 	// ユーザの全所有本リストを取得
 	public List<BookShelf> findAllFromBookShelf(int userId){
-		return repository.findAll("where STATUS=0 AND USERID="+userId);
+		return repository.findAll(userId);
 	}
 	
 	// ユーザの全所有本リストを取得
 	public List<BookShelf> findAllFromBookShelf(Account registerUser){
-		return repository.findAll("where STATUS=0 AND USERID="+registerUser.getUserId());
+		return repository.findAll(registerUser.getUserId());
 	}
 	
 	// 本棚を持っているユーザの一覧
